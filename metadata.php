@@ -3,24 +3,27 @@
 /**
  * Metadata version
  */
-$sMetadataVersion = '2.0';
+$sMetadataVersion = '2.1';
 
 /**
  * Module information
  */
-$aModule = array(
+$aModule = [
     'id'           => 'oxac/feefreepayments',
-    'title'        => 'Fee Free Payments',
-    'description'  => array(
-        'de' => 'Filter um ausschlie&szlig;lich kostenfreie Zahlmethoden anzuzeigen.',
-        'en' => 'List only fee free payment options.',
-    ),
+    'title'        => [
+        'de'    =>  'Kostenlose Zahlungsarten',
+        'de'    =>  'Fee Free Payments'
+    ],
+    'description'  => [
+        'de' => 'Filter für die Anzeige ausschlie&szlig;lich kostenloser Zahlungsarten.',
+        'en' => 'Filter for displaying free payment options only.',
+    ],
     'thumbnail'    => 'logo.png',
-    'version'      => '1.0.0',
+    'version'      => '1.0.1',
     'author'       => 'OXID Academy',
     'url'          => 'https://www.oxid-esales.com/oxid-welt/academy/schulungen/',
     'email'        => 'academy@oxid-esales.com',
-    'extend'       => array(
+    'extend'       => [
         \OxidEsales\Eshop\Application\Model\PaymentList::class => \OxidAcademy\FeeFreePayments\Model\PaymentList::class,
-    ),
-);
+    ],
+];
