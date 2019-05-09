@@ -4,7 +4,7 @@ This package contains an example extension for training purposes at OXID Academy
 
 ## Installation instructions
 
-### Require the package
+### Register and require the package
 
 In the local development environment, cd into the root directory of your compilation
 and run Composer as follows:
@@ -39,7 +39,12 @@ composer require oxid-academy/feefreepayments
   },
 ```
 
-Now, 
+## Build compilation
+
+Now, run Composer to build the compilation:
+```
+composer install
+```
 
 ## Running tests
-`./vendor/bin/runtests /var/www/html/source/modules/oxac/oxac_feefreepayments/Tests/`
+`./vendor/bin/runtests /var/www/html/source/modules/oxac/feefreepayments/Tests/`
