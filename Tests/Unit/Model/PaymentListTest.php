@@ -43,7 +43,7 @@ class PaymentListTest extends UnitTestCase
 
         // Disabling default payments
         $this->savedPayments = oxNew(PaymentList::class);
-        $this->savedPayments->selectString("SELECT * FROM `oxpayments` WHERE `OXACTIVE` = 1");
+        $this->savedPayments->selectString('SELECT * FROM oxpayments WHERE oxactive = 1');
         foreach ($this->savedPayments as $payment) {
             $payment->oxpayments__oxactive = new Field(0);
             $payment->save();
@@ -118,11 +118,11 @@ class PaymentListTest extends UnitTestCase
         // Cleanup
         foreach ($payments as $id) {
             $db->execute(
-                "DELETE FROM `oxpayments` WHERE `OXID` = ?",
+                'DELETE FROM oxpayments WHERE oxid = ?',
                 [$id]
             );
             $db->execute(
-                "DELETE FROM `oxobject2payment` WHERE `OXPAYMENTID` = ?",
+                'DELETE FROM oxobject2payment WHERE oxpaymentid = ?',
                 [$id]
             );
         }
