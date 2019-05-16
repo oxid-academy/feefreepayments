@@ -29,15 +29,15 @@ class PaymentList extends PaymentList_parent
     /**
      * Loads and returns list of fee free payments.
      *
-     * @param string                                   $sShipSetId user chosen delivery set
-     * @param double                                   $dPrice     basket product price excl. discount
-     * @param \OxidEsales\Eshop\Application\Model\User $oUser      session user object
+     * @param string $shipSetId user chosen delivery set
+     * @param double $price basket product price excl. discount
+     * @param \OxidEsales\Eshop\Application\Model\User $user session user object
      *
      * @return array
      */
-    public function getPaymentList($sShipSetId, $dPrice, $oUser = null)
+    public function getPaymentList($shipSetId, $price, $user = null)
     {
-        $list = parent::getPaymentList($sShipSetId, $dPrice, $oUser);
+        $list = parent::getPaymentList($shipSetId, $price, $user);
         $this->_aArray = [];
 
         foreach ($list as $payment) {
