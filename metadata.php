@@ -32,7 +32,7 @@ $aModule = [
         'en' => 'Filter for displaying free payment options only.',
     ],
     'thumbnail'    => 'logo.png',
-    'version'      => '1.0.1',
+    'version'      => '1.0.2',
     'author'       => 'OXID Academy',
     'url'          => 'https://www.oxid-esales.com/oxid-welt/academy/schulungen/',
     'email'        => 'academy@oxid-esales.com',
