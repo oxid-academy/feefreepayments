@@ -1,4 +1,4 @@
-# OXID Academy: Training extensions
+# OXID Academy: Exercise extensions
 
 This package contains an example extension for training purposes at OXID Academy. 
 
@@ -43,7 +43,7 @@ composer require oxid-academy/feefreepayments
 
 Now, run Composer to build the compilation:
 ```
-composer install
+composer update
 ```
 
 ## Running tests

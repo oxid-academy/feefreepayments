@@ -25,7 +25,7 @@ $aModule = [
     'id'           => 'oxac/feefreepayments',
     'title'        => [
         'de'    =>  'Kostenlose Zahlungsarten',
-        'de'    =>  'Fee Free Payments'
+        'en'    =>  'Fee Free Payments'
     ],
     'description'  => [
         'de' => 'Filter für die Anzeige ausschlie&szlig;lich kostenloser Zahlungsarten.',
