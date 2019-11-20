@@ -24,8 +24,8 @@ $sMetadataVersion = '2.1';
 $aModule = [
     'id'           => 'oxac/feefreepayments',
     'title'        => [
-        'de'    =>  'Kostenlose Zahlungsarten',
-        'de'    =>  'Fee Free Payments'
+        'de'    =>  'Kostenlose Zahlungsarten (Modulskelett)',
+        'en'    =>  'Fee Free Payments (module skeleton)'
     ],
     'description'  => [
         'de' => 'Filter für die Anzeige ausschlie&szlig;lich kostenloser Zahlungsarten.',

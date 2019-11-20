@@ -1,6 +1,6 @@
-# OXID Academy: Training extensions
+# OXID Academy: Exercise extensions (Skeleton)
 
-This package contains an example extension for training purposes at OXID Academy. 
+This package contains a module skeleton for training purposes at OXID Academy. 
 
 ## Installation instructions
 
@@ -35,7 +35,7 @@ composer require oxid-academy/feefreepayments
 ```
   "require": {
     ...,
-    "oxid-academy/feefreepayments": "^1.0"
+    "oxid-academy/feefreepayments": "dev-skeleton"
   },
 ```
 
@@ -43,7 +43,7 @@ composer require oxid-academy/feefreepayments
 
 Now, run Composer to build the compilation:
 ```
-composer install
+composer update
 ```
 
 ## Running tests

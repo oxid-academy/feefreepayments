@@ -37,15 +37,6 @@ class PaymentList extends PaymentList_parent
      */
     public function getPaymentList($shipSetId, $price, $user = null)
     {
-        $list = parent::getPaymentList($shipSetId, $price, $user);
-        $this->_aArray = [];
 
-        foreach ($list as $payment) {
-            if ($payment instanceof Payment && $payment->oxpayments__oxaddsum->value == 0) {
-                $this->_aArray[$payment->getId()] = $payment;
-            }
-        }
-
-        return $this->_aArray;
     }
 }

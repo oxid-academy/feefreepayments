@@ -39,15 +39,7 @@ class PaymentListTest extends UnitTestCase
 
     protected function setUp()
     {
-        parent::setUp();
 
-        // Disabling default payments
-        $this->savedPayments = oxNew(PaymentList::class);
-        $this->savedPayments->selectString('SELECT * FROM oxpayments WHERE oxactive = 1');
-        foreach ($this->savedPayments as $payment) {
-            $payment->oxpayments__oxactive = new Field(0);
-            $payment->save();
-        }
     }
 
     /**
@@ -55,76 +47,11 @@ class PaymentListTest extends UnitTestCase
      */
     protected function tearDown()
     {
-        parent::tearDown();
 
-        foreach ($this->savedPayments as $payment) {
-            $payment->oxpayments__oxactive = new Field(1);
-            $payment->save();
-        }
     }
 
     public function testGetPaymentListFiltersOnlyPaymentsWithFees()
     {
-        $db = DatabaseProvider::getDb();
 
-        // (ox)id => fee
-        $payments = [
-            'payment1' => 0,
-            'payment2' => 1,
-            'payment3' => 0,
-        ];
-
-        foreach ($payments as $id => $fee) {
-
-            // Creating the payment method
-            $payment = oxNew(Payment::class);
-            $payment->setId($id);
-            $payment->oxpayments__oxactive = new Field(1);
-            $payment->oxpayments__oxaddsum = new Field($fee);
-            $payment->oxpayments__oxfromamount = new Field(0);
-            $payment->oxpayments__oxtoamount = new Field(100);
-            $payment->save();
-
-            // Assigning the default delivery set to the payment method
-            $deliverySet = oxNew(BaseModel::class);
-            $deliverySet->init('oxobject2payment');
-            $deliverySet->oxobject2payment__oxpaymentid = new Field($id);
-            $deliverySet->oxobject2payment__oxobjectid = new Field('oxidstandard');
-            $deliverySet->oxobject2payment__oxtype = new Field('oxdelset');
-            $deliverySet->save();
-        }
-
-
-        // Creating a user object for the payment list
-        $user = oxNew(User::class);
-        $user->load('oxdefaultadmin');
-
-        $paymentList = oxNew(PaymentList::class);
-        $list = $paymentList->getPaymentList('oxidstandard', 0.0, $user);
-
-        /*
-         * Testing it
-         *
-         * There must be two payments in the list.
-         * The list must contain payment1 and payment3.
-         * The list must not contain payment2 as it has a fee.
-         */
-        $this->assertCount(2, $list);
-        $this->assertArrayHasKey('payment1', $list);
-        $this->assertArrayHasKey('payment3', $list);
-        $this->assertArrayNotHasKey('payment2', $list);
-
-
-        // Cleanup
-        foreach ($payments as $id) {
-            $db->execute(
-                'DELETE FROM oxpayments WHERE oxid = ?',
-                [$id]
-            );
-            $db->execute(
-                'DELETE FROM oxobject2payment WHERE oxpaymentid = ?',
-                [$id]
-            );
-        }
     }
 }
