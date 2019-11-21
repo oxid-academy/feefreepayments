@@ -28,14 +28,14 @@ This should result in the following change to `composer.json`:
 
 And then, ...
 ```
-composer require oxid-academy/feefreepayments
+composer require oxid-academy/feefreepayments:dev-resolved
 ```
 
 ... which makes it:
 ```
   "require": {
     ...,
-    "oxid-academy/feefreepayments": "^1.0"
+    "oxid-academy/feefreepayments": "dev-resolved"
   },
 ```
 
@@ -47,4 +47,4 @@ composer update
 ```
 
 ## Running tests
-`./vendor/bin/runtests /var/www/html/source/modules/oxac/feefreepayments/Tests/`
+`./vendor/bin/runtests /var/www/oxideshop/source/modules/oxac/feefreepayments/Tests/`
