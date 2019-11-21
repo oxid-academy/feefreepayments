@@ -35,7 +35,7 @@ composer require oxid-academy/feefreepayments
 ```
   "require": {
     ...,
-    "oxid-academy/feefreepayments": "dev-skeleton"
+    "oxid-academy/feefreepayments": "dev-master"
   },
 ```
 
@@ -47,4 +47,4 @@ composer update
 ```
 
 ## Running tests
-`./vendor/bin/runtests /var/www/html/source/modules/oxac/feefreepayments/Tests/`
+`./vendor/bin/runtests /var/www/oxideshop/source/modules/oxac/feefreepayments/Tests/`
