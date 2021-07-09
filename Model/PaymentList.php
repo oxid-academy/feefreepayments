@@ -9,7 +9,7 @@
  *
  * @author        OXID Academy
  * @link          https://www.oxid-esales.com
- * @copyright (C) OXID eSales AG 2003-2019
+ * @copyright (C) OXID eSales AG 2003-2021
  *
  * User: michael
  * Date: 23.04.19
@@ -40,8 +40,10 @@ class PaymentList extends PaymentList_parent
         $list = parent::getPaymentList($shipSetId, $price, $user);
         $this->_aArray = [];
 
-        foreach ($list as $payment) {
-            if ($payment instanceof Payment && $payment->oxpayments__oxaddsum->value == 0) {
+        foreach ($list as $payment)
+        {
+            if ($payment instanceof Payment && $payment->oxpayments__oxaddsum->value == 0)
+            {
                 $this->_aArray[$payment->getId()] = $payment;
             }
         }
