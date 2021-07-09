@@ -9,7 +9,7 @@
  *
  * @author        OXID Academy
  * @link          https://www.oxid-esales.com
- * @copyright (C) OXID eSales AG 2003-2019
+ * @copyright (C) OXID eSales AG 2003-2021
  *
  * User: michael
  * Date: 24.04.19
@@ -50,6 +50,9 @@ class PaymentListTest extends UnitTestCase
 
     }
 
+    /**
+     * Create payment option, assign to delivery set, then test with user.
+     */
     public function testGetPaymentListFiltersOnlyPaymentsWithFees()
     {
 

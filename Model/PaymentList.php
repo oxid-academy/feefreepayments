@@ -9,7 +9,7 @@
  *
  * @author        OXID Academy
  * @link          https://www.oxid-esales.com
- * @copyright (C) OXID eSales AG 2003-2019
+ * @copyright (C) OXID eSales AG 2003-2021
  *
  * User: michael
  * Date: 23.04.19
@@ -37,6 +37,7 @@ class PaymentList extends PaymentList_parent
      */
     public function getPaymentList($shipSetId, $price, $user = null)
     {
-
+        // @Todo: Replace this.
+        return parent::getPaymentList(shipSetId, price, user);
     }
 }

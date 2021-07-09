@@ -1,13 +1,13 @@
 # OXID Academy: Exercise extensions (Skeleton)
 
-This package contains a module skeleton for training purposes at OXID Academy. 
+This package contains an example module intended for training purposes at OXID Academy.
 
-## Installation instructions
+# Installation instructions
 
-### Register and require the package
+## Register and require the package
 
-In the local development environment, cd into the root directory of your compilation
-and run Composer as follows:
+In the local development environment, cd into the root directory of your compilation (where composer.json and composer.lock
+are located) and run Composer as shown below:
  
 ```
 composer config repositories.oxid-academy/feefreepayments vcs https://github.com/oxid-academy/feefreepayments.git
@@ -15,18 +15,18 @@ composer config repositories.oxid-academy/feefreepayments vcs https://github.com
 
 This should result in the following change to `composer.json`:
 ```
-...
+   ...
   "repositories": {
-    ...,
     "oxid-academy/feefreepayments": {
       "type": "vcs",
       "url": "https://github.com/oxid-academy/feefreepayments.git"
-    }
+    },
+    ...
   },
   ...
 ```
 
-And then, ...
+... which results in something like:
 ```
 composer require oxid-academy/feefreepayments
 ```
@@ -39,12 +39,18 @@ composer require oxid-academy/feefreepayments
   },
 ```
 
-## Build compilation
+# Enabling the module
 
-Now, run Composer to build the compilation:
+* When Composer is done processing your new request, you may enable the module:
 ```
-composer update
+vendor/bin/oe-console o:m:activate oxacfeefreepayments
 ```
 
-## Running tests
-`./vendor/bin/runtests /var/www/oxideshop/source/modules/oxac/feefreepayments/Tests/`
+# Running tests
+cd into the root dir of your compilation and run the following command whereupon `/var/www/oxideshop` represents the absolute
+path to your compilation:
+
+```
+cd /var/www/oxideshop/
+./vendor/bin/runtests /var/www/oxideshop/source/modules/oxac/feefreepayments/Tests/
+```

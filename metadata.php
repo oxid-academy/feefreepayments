@@ -9,7 +9,7 @@
  *
  * @author        OXID Academy
  * @link          https://www.oxid-esales.com
- * @copyright (C) OXID eSales AG 2003-2019
+ * @copyright (C) OXID eSales AG 2003-2021
  *
  */
 
@@ -22,7 +22,7 @@ $sMetadataVersion = '2.1';
  * Module information
  */
 $aModule = [
-    'id'           => 'oxac/feefreepayments',
+    'id'           => 'oxacfeefreepayments',
     'title'        => [
         'de'    =>  'Kostenlose Zahlungsarten (Modulskelett)',
         'en'    =>  'Fee Free Payments (module skeleton)'
@@ -32,7 +32,7 @@ $aModule = [
         'en' => 'Filter for displaying free payment options only.',
     ],
     'thumbnail'    => 'logo.png',
-    'version'      => '1.0.2',
+    'version'      => '2.0.0',
     'author'       => 'OXID Academy',
     'url'          => 'https://www.oxid-esales.com/oxid-welt/academy/schulungen/',
     'email'        => 'academy@oxid-esales.com',
