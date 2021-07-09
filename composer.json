@@ -3,7 +3,7 @@
     "description": "Sample payment extension",
     "type": "oxideshop-module",
     "keywords": ["oxid", "modules", "eShop"],
-    "homepage": "https://www.oxid-esales.com/oxid-welt/academy/schulungen/",
+    "homepage": "https://www.oxid-esales.com/academy/schulungen",
     "license": [
         "GPL-3.0-only",
         "proprietary"
@@ -13,13 +13,12 @@
             "target-directory": "oxac/feefreepayments"
         }
     },
-    "version":  "1.0.2",
     "require": {
-        "php": ">=7.1"
+        "oxid-esales/oxideshop-metapackage-ce": ">=6.1.0"
     },
     "autoload": {
         "psr-4": {
-            "OxidAcademy\\FeeFreePayments\\": "../../../source/modules/oxac/feefreepayments"
+            "OxidAcademy\\FeeFreePayments\\": "."
         }
     }
 }
