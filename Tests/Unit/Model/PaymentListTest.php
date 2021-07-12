@@ -37,7 +37,7 @@ class PaymentListTest extends UnitTestCase
      */
     protected $savedPayments = [];
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -53,7 +53,7 @@ class PaymentListTest extends UnitTestCase
     /**
      * @see \OxidEsales\EshopCommunity\Tests\Unit\Application\Model\PaymentlistTest::tearDown
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
