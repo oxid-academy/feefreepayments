@@ -38,6 +38,6 @@ class PaymentList extends PaymentList_parent
     public function getPaymentList($shipSetId, $price, $user = null)
     {
         // @Todo: Replace this.
-        return parent::getPaymentList(shipSetId, price, user);
+        return parent::getPaymentList($shipSetId, $price, $user);
     }
 }
