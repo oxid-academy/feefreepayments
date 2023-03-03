@@ -1,0 +1,8 @@
+services:
+
+  _defaults:
+    public: false
+    autowire: true
+
+  OxidAcademy\FeeFreePayments\Service\ListService:
+    public: true

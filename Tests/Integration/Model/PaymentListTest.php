@@ -16,7 +16,7 @@
  * Time: 13:15
  */
 
-namespace OxidAcademy\FeeFreePayments\Tests\Unit\Model;
+namespace OxidAcademy\FeeFreePayments\Tests\Integration\Model;
 
 use OxidEsales\Eshop\Application\Model\Payment;
 use OxidEsales\Eshop\Application\Model\PaymentList;
@@ -24,9 +24,9 @@ use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Model\BaseModel;
-use OxidEsales\TestingLibrary\UnitTestCase;
+use PHPUnit\Framework\TestCase;
 
-class PaymentListTest extends UnitTestCase
+class PaymentListTest extends TestCase
 {
     /**
      * Holds the demo payment objects.
