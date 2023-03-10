@@ -18,116 +18,177 @@
 
 namespace OxidAcademy\FeeFreePayments\Tests\Integration\Model;
 
-use OxidEsales\Eshop\Application\Model\Payment;
+use OxidEsales\Eshop\Application\Model\Payment as EshopModelPayment;
+use OxidEsales\Eshop\Application\Model\DeliverySet as EshopModelDeliverySet;
+use OxidEsales\Eshop\Application\Model\Delivery as EshopModelDelivery;
+use OxidEsales\Eshop\Application\Model\User as EshopModelUser;
+use OxidEsales\Eshop\Core\Model\BaseModel as EshopBaseModel;
 use OxidEsales\Eshop\Application\Model\PaymentList;
-use OxidEsales\Eshop\Application\Model\User;
-use OxidEsales\Eshop\Core\DatabaseProvider;
-use OxidEsales\Eshop\Core\Field;
-use OxidEsales\Eshop\Core\Model\BaseModel;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
-class PaymentListTest extends TestCase
+class PaymentListTest extends IntegrationTestCase
 {
-    /**
-     * Holds the demo payment objects.
-     * Gets filled up by \OxidAcademy\FeeFreePayments\Tests\Unit\Model\PaymentListTest::setUp and
-     * \OxidAcademy\FeeFreePayments\Tests\Unit\Model\PaymentListTest::tearDown
-     *
-     * @var Payment[]
-     */
-    protected $savedPayments = [];
+    private const DELIVERY_SET_ID = 'test_delivery';
+    private const DELIVERY_RULE_ID = 'test_delivery_rule';
+    private const TEST_USER_ID = 'test_user';
+    private const COUNTRY_ID = 'a7c40f631fc920687.20179984';
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
-        // Disabling default payments
-        $this->savedPayments = oxNew(PaymentList::class);
-        $this->savedPayments->selectString('SELECT * FROM oxpayments WHERE oxactive = 1');
-        foreach ($this->savedPayments as $payment) {
-            $payment->oxpayments__oxactive = new Field(0);
-            $payment->save();
-        }
+        $this->prepareTestData();
     }
 
-    /**
-     * @see \OxidEsales\EshopCommunity\Tests\Unit\Application\Model\PaymentlistTest::tearDown
-     */
-    protected function tearDown(): void
+    public function testGetFeeFreePayments(): void
     {
-        parent::tearDown();
-
-        foreach ($this->savedPayments as $payment) {
-            $payment->oxpayments__oxactive = new Field(1);
-            $payment->save();
-        }
-    }
-
-    /**
-     * Create payment option, assign to delivery set, then test with user.
-     */
-    public function testGetPaymentListFiltersOnlyPaymentsWithFees()
-    {
-        $db = DatabaseProvider::getDb();
-
-        // (ox)id => fee
-        $payments = [
-            'payment1' => 0,
-            'payment2' => 1,
-            'payment3' => 0,
-        ];
-
-        foreach ($payments as $id => $fee) {
-
-            // Creating the payment method
-            $payment = oxNew(Payment::class);
-            $payment->setId($id);
-            $payment->oxpayments__oxactive = new Field(1);
-            $payment->oxpayments__oxaddsum = new Field($fee);
-            $payment->oxpayments__oxfromamount = new Field(0);
-            $payment->oxpayments__oxtoamount = new Field(100);
-            $payment->save();
-
-            // Assigning the default delivery set to the payment method
-            $deliverySet = oxNew(BaseModel::class);
-            $deliverySet->init('oxobject2payment');
-            $deliverySet->oxobject2payment__oxpaymentid = new Field($id);
-            $deliverySet->oxobject2payment__oxobjectid = new Field('oxidstandard');
-            $deliverySet->oxobject2payment__oxtype = new Field('oxdelset');
-            $deliverySet->save();
-        }
-
-
-        // Creating a user object for the payment list
-        $user = oxNew(User::class);
-        $user->load('oxdefaultadmin');
+        //load test user
+        $user = oxNew(EshopModelUser::class);
+        $user->load(self::TEST_USER_ID);
 
         $paymentList = oxNew(PaymentList::class);
-        $list = $paymentList->getPaymentList('oxidstandard', 0.0, $user);
+        $list = $paymentList->getPaymentList(self::DELIVERY_SET_ID, 10.0, $user);
 
         /*
-         * Testing it
-         *
-         * There must be two payments in the list.
-         * The list must contain payment1 and payment3.
-         * The list must not contain payment2 as it has a fee.
-         */
+        * Testing it
+        *
+        * There must be two payments in the list.
+        * The list must contain payment1 and payment3 as those are the cost free ones attached to test delivery set.
+        * The list must not contain payment2 and payment 4 as it has a fee.
+        */
         $this->assertCount(2, $list);
         $this->assertArrayHasKey('payment1', $list);
         $this->assertArrayHasKey('payment3', $list);
         $this->assertArrayNotHasKey('payment2', $list);
+        $this->assertArrayNotHasKey('payment4', $list);
+    }
 
+    private function prepareTestData(): void
+    {
+        $this->createUser();
+        $this->createDeliverySet();
+        $this->preparePayments();
+    }
 
-        // Cleanup
-        foreach ($payments as $id) {
-            $db->execute(
-                'DELETE FROM oxpayments WHERE oxid = ?',
-                [$id]
-            );
-            $db->execute(
-                'DELETE FROM oxobject2payment WHERE oxpaymentid = ?',
-                [$id]
-            );
+    private function preparePayments(): void
+    {
+        $data = [
+            [
+                'oxid' => 'payment1',
+                'addSum' => 0.0
+            ],
+            [
+                'oxid' => 'payment2',
+                'addSum' => 1.0
+            ],
+            [
+                'oxid' => 'payment3',
+                'addSum' => 0.0
+            ],
+            [
+                'oxid' => 'payment4',
+                'addSum' => 2.1
+            ]
+        ];
+
+        foreach ($data as $values) {
+            $this->createPayment($values['oxid'], $values['addSum']);
         }
+    }
+
+    private function createPayment(string $oxid, float $addSum): void
+    {
+        $payment = oxNew(EshopModelPayment::class);
+        $payment->assign(
+            [
+                'oxid' => $oxid,
+                'oxdesc' => $oxid,
+                'oxactive' => '1',
+                'oxaddsum' => $addSum,
+                'oxfromamount' => 0,
+                'oxtoamount' => 100
+            ]
+        );
+        $payment->save();
+
+        $this->relatePaymentToDeliverySet($oxid);
+    }
+
+    private function relatePaymentToDeliverySet(string $paymentId): void
+    {
+        $relation = oxNew(EshopBaseModel::class);
+        $relation->init('oxobject2payment');
+        $relation->assign(
+            [
+                'oxpaymentid' => $paymentId,
+                'oxobjectid' => self::DELIVERY_SET_ID,
+                'oxtype' => 'oxdelset'
+            ]
+        );
+        $relation->save();
+    }
+
+    private function createDeliverySet(): void
+    {
+        //create delivery set
+        $delSet = oxNew(EshopModelDeliverySet::class);
+        $delSet->assign(
+            [
+                'oxid' => self::DELIVERY_SET_ID,
+                'oxactive' => '1',
+                'oxtitle' => self::DELIVERY_SET_ID
+            ]
+        );
+        $delSet->save();
+
+        //assign country to delivery set
+        $delSet2Country = oxNew(EshopBaseModel::class);
+        $delSet2Country->init('oxobject2delivery');
+        $delSet2Country->assign(
+            [
+                'oxid' => self::DELIVERY_SET_ID,
+                'oxdeliveryid' => self::DELIVERY_SET_ID,
+                'oxobjectid' => self::COUNTRY_ID,
+                'oxtype' => 'oxdelset'
+            ]
+        );
+
+        //create delivery rule
+        $delSet = oxNew(EshopModelDelivery::class);
+        $delSet->assign(
+            [
+                'oxid' => self::DELIVERY_RULE_ID,
+                'oxactive' => '1',
+                'oxtitle' => self::DELIVERY_RULE_ID,
+                'oxparam' => 0,
+                'oxparamend' => 1000,
+                'oxfinalize' => 1
+            ]
+        );
+        $delSet->save();
+
+        //Relate delivery rule to delivery set
+        $del2DelSet = oxNew(EshopBaseModel::class);
+        $del2DelSet->init('oxdel2delset');
+        $del2DelSet->assign(
+            [
+                'oxdelid' => self::DELIVERY_SET_ID,
+                'oxdelsetid' => self::DELIVERY_RULE_ID
+            ]
+        );
+    }
+
+    private function createUser(): void
+    {
+        $user = oxNew(EshopModelUser::class);
+        $user->assign(
+            [
+                'oxid' => self::TEST_USER_ID,
+                'oxusername' => 'testuser@oxid-academy.com',
+                'oxrights' => 'user',
+                'oxcountryid' => self::COUNTRY_ID
+            ]
+        );
+        $user->save();
     }
 }

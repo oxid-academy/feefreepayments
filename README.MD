@@ -28,14 +28,14 @@ This should result in the following change to `composer.json`:
 
 And then, ...
 ```
-composer require oxid-academy/feefreepayments:dev-resolved
+composer require oxid-academy/feefreepayments:dev-b-7.0.x_resolved
 ```
 
 ... which results in something like:
 ```
   "require": {
     ...,
-    "oxid-academy/feefreepayments": "dev-resolved"
+    "oxid-academy/feefreepayments": "dev-b-7.0.x_resolved"
   },
 ```
 
@@ -47,11 +47,23 @@ vendor/bin/oe-console o:m:activate oxacfeefreepayments
 ```
 
 # Running tests
- cd into the root dir of your compilation and run the following command whereupon `/var/www/oxideshop` represents the absolute
+ cd into the root dir of your compilation and run the following command whereupon `/var/www` represents the absolute
 path to your compilation
 
+Run unit tests
 ```
-cd /var/www/oxideshop/
-./vendor/bin/runtests /var/www/oxideshop/source/modules/oxac/feefreepayments/Tests/
+cd /var/www/
+./vendor/bin/phpunit  -c /var/www/vendor/oxid-academy/feefreepayments/tests/phpunit.xml --testsuite=Unit 
 ```
 
+Run integraton tests
+```
+cd /var/www/
+./vendor/bin/phpunit --bootstrap=/var/www/source/bootstrap.php -c /var/www/vendor/oxid-academy/feefreepayments/tests/phpunit.xml --testsuite=Integration 
+```
+
+Run Codeception tests
+```
+cd /var/www/
+export THEME_ID=flow && export MODULE_IDS=oxacfeefreepayments && vendor/bin/codecept run acceptance --bootstrap=/var/www/source/bootstrap.php -c /var/www/vendor/oxid-academy/feefreepayments/tests/codeception.yml -g example -vvv
+```
