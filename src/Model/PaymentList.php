@@ -18,8 +18,6 @@
 
 namespace OxidAcademy\FeeFreePayments\Model;
 
-use OxidEsales\Eshop\Application\Model\Payment;
-
 /**
  * Class PaymentList
  * @package OxidAcademy\FeeFreePayments\Model
@@ -37,7 +35,6 @@ class PaymentList extends PaymentList_parent
      */
     public function getPaymentList($shipSetId, $price, $user = null)
     {
-        // @Todo: Replace this.
-        return parent::getPaymentList($shipSetId, $price, $user);
+        return $this->_aArray;
     }
 }

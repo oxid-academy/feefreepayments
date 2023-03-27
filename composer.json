@@ -13,12 +13,13 @@
             "target-directory": "oxac/feefreepayments"
         }
     },
-    "require": {
-        "oxid-esales/oxideshop-metapackage-ce": ">=6.1.0"
+    "conflict": {
+        "oxid-esales/oxideshop-ce": "<6.14"
     },
     "autoload": {
         "psr-4": {
-            "OxidAcademy\\FeeFreePayments\\": "."
+            "OxidAcademy\\FeeFreePayments\\": "src/",
+            "OxidAcademy\\FeeFreePayments\\Tests\\": "tests/"
         }
     }
 }
