@@ -1,0 +1,9 @@
+{% extends 'layout/header.html.twig' %}
+
+{% block header_main %}
+    <p>
+        {{ translate({ ident: "OXAC_FEEFREEPAYMENTS_TEASER" }) }}
+    </p>
+
+    {{ parent() }}
+{% endblock %}

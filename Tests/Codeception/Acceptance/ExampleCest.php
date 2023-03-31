@@ -16,13 +16,13 @@ use OxidEsales\Codeception\Module\Translation\Translator;
  */
 final class ExampleCest
 {
-    public function testCanOpenShopStartPage(AcceptanceTester $I): void
+    public function testCanOpenShopStartPageAndSeeExtendedTemplate(AcceptanceTester $I): void
     {
         $I->wantToTest('that codeception tests are working');
 
         $I->openShop();
         $I->waitForPageLoad();
 
-        $I->see(Translator::translate('HOME'));
+        $I->see(Translator::translate('OXAC_FEEFREEPAYMENTS_TEASER'));
     }
 }

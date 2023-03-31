@@ -65,5 +65,5 @@ cd /var/www/
 Run Codeception tests
 ```
 cd /var/www/
-export THEME_ID=flow && export MODULE_IDS=oxacfeefreepayments && vendor/bin/codecept run acceptance --bootstrap=/var/www/source/bootstrap.php -c /var/www/vendor/oxid-academy/feefreepayments/tests/codeception.yml -g example -vvv
+export THEME_ID=apex && export MODULE_IDS=oxacfeefreepayments && vendor/bin/codecept run acceptance --bootstrap=/var/www/source/bootstrap.php -c /var/www/vendor/oxid-academy/feefreepayments/tests/codeception.yml -g example -vvv
 ```
