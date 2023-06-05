@@ -28,14 +28,14 @@ This should result in the following change to `composer.json`:
 
 And then, ...
 ```
-composer require oxid-academy/feefreepayments:dev-resolved
+composer require oxid-academy/feefreepayments:dev-b-6.5.x_resolved
 ```
 
 ... which results in something like:
 ```
   "require": {
     ...,
-    "oxid-academy/feefreepayments": "dev-resolved"
+    "oxid-academy/feefreepayments": "dev-b-6.5.x_resolved"
   },
 ```
 
@@ -52,6 +52,6 @@ path to your compilation
 
 ```
 cd /var/www/oxideshop/
-./vendor/bin/runtests /var/www/oxideshop/source/modules/oxac/feefreepayments/Tests/
+./vendor/bin/runtests /var/www/oxideshop/source/modules/oxac/feefreepayments/tests/
 ```
 
