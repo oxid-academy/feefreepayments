@@ -18,7 +18,8 @@
 
 namespace OxidAcademy\FeeFreePayments\Model;
 
-use OxidEsales\Eshop\Application\Model\Payment;
+use OxidAcademy\FeeFreePayments\Service\ListService;
+use OxidAcademy\FeeFreePayments\Traits\ServiceContainer;
 
 /**
  * Class PaymentList
@@ -26,6 +27,8 @@ use OxidEsales\Eshop\Application\Model\Payment;
  */
 class PaymentList extends PaymentList_parent
 {
+    use ServiceContainer;
+
     /**
      * Loads and returns list of fee free payments.
      *
@@ -38,15 +41,14 @@ class PaymentList extends PaymentList_parent
     public function getPaymentList($shipSetId, $price, $user = null)
     {
         $list = parent::getPaymentList($shipSetId, $price, $user);
-        $this->_aArray = [];
 
-        foreach ($list as $payment)
-        {
-            if ($payment instanceof Payment && $payment->oxpayments__oxaddsum->value == 0)
-            {
-                $this->_aArray[$payment->getId()] = $payment;
-            }
-        }
+        $service = $this->getServiceFromContainer(ListService::class);
+
+        $this->_aArray = $service->getItemsWithNumericValueEqualOrBelow(
+            $list,
+            'oxaddsum',
+            0
+        );
 
         return $this->_aArray;
     }
